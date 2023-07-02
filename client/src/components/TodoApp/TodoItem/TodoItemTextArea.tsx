@@ -1,6 +1,6 @@
 "use client";
 
-import { ForwardedRef, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface TodoItemTextAreaProps {
   complete: boolean;

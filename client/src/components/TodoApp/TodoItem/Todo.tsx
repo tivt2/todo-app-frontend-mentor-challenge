@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Generic } from "../../Generic";
 import { TodoItem } from ".";
 
 interface TodoProps {

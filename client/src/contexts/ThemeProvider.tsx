@@ -1,12 +1,17 @@
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { THEME_TYPE } from "@/types/types";
-import { useLocalStorage } from "./useLocalStorage";
-import { useEffect } from "react";
+import { ReactNode, createContext, useEffect } from "react";
 
-export function useTheme(): [
-  theme: THEME_TYPE,
-  setTheme: (newTheme: THEME_TYPE) => void,
-  getTheme: () => THEME_TYPE
-] {
+export const ThemeContext = createContext({
+  theme: THEME_TYPE.SYSTEM,
+  setTheme: (newTheme: THEME_TYPE) => {},
+});
+
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useLocalStorage<THEME_TYPE>(
     "theme",
     THEME_TYPE.SYSTEM
@@ -35,9 +40,9 @@ export function useTheme(): [
     };
   }, [theme]);
 
-  const getTheme = () => {
-    return JSON.parse(localStorage.getItem("theme") as string);
-  };
-
-  return [theme, setTheme, getTheme];
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }

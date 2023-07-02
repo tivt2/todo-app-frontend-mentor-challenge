@@ -4,11 +4,11 @@ import { ReactNode, createContext, useState } from "react";
 
 export const AuthContext = createContext<TauthContext>({} as TauthContext);
 
-interface AuthContextProviderProps {
+interface AuthProviderProps {
   children: ReactNode;
 }
 
-export function AuthContextProvider({ children }: AuthContextProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [auth, setAuth] = useState(false);
 
   const handleLogin = (payload: { username: string; password: string }) => {

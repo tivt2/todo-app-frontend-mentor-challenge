@@ -1,7 +1,8 @@
 import { queryClient } from "@/api/queryClient";
 import { QueryClientProvider } from "react-query";
-import { AuthContextProvider } from "./AuthContext";
+import { AuthProvider } from "./AuthProvider";
 import { ReactNode } from "react";
+import { ThemeProvider } from "./ThemeProvider";
 
 interface ContextWrapperProps {
   children: ReactNode;
@@ -10,7 +11,9 @@ interface ContextWrapperProps {
 export function ContextWrapper({ children }: ContextWrapperProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>{children}</AuthContextProvider>
+      <AuthProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

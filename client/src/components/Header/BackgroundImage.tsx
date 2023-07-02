@@ -1,8 +1,7 @@
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTheme } from "@/hooks/useTheme";
+import { ThemeContext } from "@/contexts/ThemeProvider";
 import { THEME_TYPE } from "@/types/types";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useContext } from "react";
 
 const mobileImages = {
   light: "/images/bg-mobile-light.jpg",
@@ -15,7 +14,7 @@ const desktopImage = {
 };
 
 export function BackgroundImage() {
-  const [theme, setTheme, getTheme] = useTheme();
+  const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <picture className=" -z-50 fixed top-0 w-full h-full">

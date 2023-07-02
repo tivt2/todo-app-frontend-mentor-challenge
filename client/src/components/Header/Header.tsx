@@ -1,15 +1,13 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Generic } from "../Generic";
-import { AuthContext } from "@/contexts/AuthContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { AuthContext } from "@/contexts/AuthProvider";
 import { THEME_TYPE } from "@/types/types";
-import { BackgroundImage } from "./BackgroundImage";
-import { useTheme } from "@/hooks/useTheme";
 import { Icon } from "../Icons";
+import { ThemeContext } from "@/contexts/ThemeProvider";
 
 export function Header() {
   const { auth, handleLogout } = useContext(AuthContext);
-  const [theme, setTheme] = useTheme();
+  const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <header className=" w-full flex flex-row items-center justify-between text-light-base-100 mb-6 brkpt:mb-10">

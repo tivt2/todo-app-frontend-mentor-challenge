@@ -4,7 +4,7 @@ import { z } from "zod";
 import { LoginSingup } from ".";
 import { Generic } from "../Generic";
 import { useContext, useState } from "react";
-import { AuthContext } from "@/contexts/AuthContext";
+import { AuthContext } from "@/contexts/AuthProvider";
 
 const LoginSingupSchema = z.object({
   username: z.string().nonempty("Cannot be empty"),

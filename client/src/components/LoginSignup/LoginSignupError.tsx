@@ -1,5 +1,3 @@
-import { HTMLAttributes } from "react";
-
 interface LoginSignupErrorProps {
   message: string;
 }
