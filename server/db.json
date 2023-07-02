@@ -1,0 +1,40 @@
+{
+  "1": {
+    "id": "1",
+    "username": "admin",
+    "password": "admin",
+    "todos": {
+      "1": {
+        "id": "1",
+        "content": "Complete online JavaScript course",
+        "complete": true
+      },
+      "6": {
+        "id": "6",
+        "content": "Complete Todo App on Frontend Mentor",
+        "complete": false
+      },
+      "3": {
+        "id": "3",
+        "content": "10 minutes meditation",
+        "complete": false
+      },
+      "2": {
+        "id": "2",
+        "content": "Jog around the part 3x",
+        "complete": false
+      },
+      "4": {
+        "id": "4",
+        "content": "Read for 1 hour",
+        "complete": false
+      },
+      "5": {
+        "id": "5",
+        "content": "Pick up groceries",
+        "complete": false
+      }
+    },
+    "todosOrder": ["1", "2", "3", "4", "5", "6"]
+  }
+}

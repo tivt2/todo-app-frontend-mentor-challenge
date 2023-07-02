@@ -1,0 +1,6 @@
+# dotenv enfironment variables files
+.env
+enfironment.d.ts
+
+# node modules
+/node_modules/
