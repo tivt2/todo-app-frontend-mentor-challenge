@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginSingup } from ".";
 import { Generic } from "../Generic";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 
 const LoginSingupSchema = z.object({
@@ -31,6 +31,13 @@ export function LoginSignupComponent() {
       password: "",
     },
   });
+
+  console.log(errors);
+
+  useEffect(() => {
+    if (!isSingup) {
+    }
+  }, [isSingup]);
 
   const onLogin: SubmitHandler<TloginSignup> = (data) => {
     const payload = { username: data.username, password: data.password };
@@ -76,9 +83,6 @@ export function LoginSignupComponent() {
           label="user name:"
           {...register("username")}
           errorMessage={errors.username?.message}
-          onChange={(e) => {
-            clearErrors("username");
-          }}
         />
         <LoginSingup.Input
           type={"password"}
@@ -86,9 +90,6 @@ export function LoginSignupComponent() {
           {...register("password")}
           className=" mt-8"
           errorMessage={errors.password?.message}
-          onChange={(e) => {
-            clearErrors("password");
-          }}
         />
         {isSingup ? (
           <LoginSingup.Input
@@ -97,9 +98,6 @@ export function LoginSignupComponent() {
             {...register("confirm")}
             className=" mt-4"
             errorMessage={errors.confirm?.message}
-            onChange={(e) => {
-              clearErrors("confirm");
-            }}
           />
         ) : null}
         <div className=" w-full flex flex-row justify-between items-center mt-8">
