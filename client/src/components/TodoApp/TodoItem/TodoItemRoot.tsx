@@ -1,9 +1,17 @@
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
-interface TodoItemRootProps {
+interface TodoItemRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export function TodoItemRoot({ children }: TodoItemRootProps) {
-  return <div>{children}</div>;
+export function TodoItemRoot({
+  children,
+  className,
+  ...rest
+}: TodoItemRootProps) {
+  return (
+    <div className={` ${className}`} {...rest}>
+      {children}
+    </div>
+  );
 }

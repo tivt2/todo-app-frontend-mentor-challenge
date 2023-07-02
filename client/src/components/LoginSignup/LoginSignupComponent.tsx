@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { LoginSingup } from ".";
 import { Generic } from "../Generic";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 
 const LoginSingupSchema = z.object({
@@ -31,13 +31,6 @@ export function LoginSignupComponent() {
       password: "",
     },
   });
-
-  console.log(errors);
-
-  useEffect(() => {
-    if (!isSingup) {
-    }
-  }, [isSingup]);
 
   const onLogin: SubmitHandler<TloginSignup> = (data) => {
     const payload = { username: data.username, password: data.password };

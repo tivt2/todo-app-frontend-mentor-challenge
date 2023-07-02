@@ -1,13 +1,14 @@
 import { addTokenToRequest, api } from "@/api/axios";
 import { Tuser } from "@/types/types";
 import { useQuery } from "react-query";
+import { Todo } from "./TodoItem/Todo";
+import { Generic } from "../Generic";
 
 const fetchUser = () => {
   addTokenToRequest();
   const res = api
     .get("/todos")
     .then((data) => {
-      console.log(data.data);
       return data.data;
     })
     .catch((err) => console.log(err.response.data.message));
@@ -22,11 +23,21 @@ export function TodoApp(props: TodoAppProps) {
 
   return (
     <>
-      {!isLoading &&
-        !!data &&
-        data.todosOrder.map((todoId: string) => {
-          return <p key={todoId}>{data.todos[todoId].content}</p>;
-        })}
+      <Generic.Container>
+        {!isLoading && !!data
+          ? data.todosOrder.map((todoId: string) => {
+              return (
+                <Todo
+                  key={todoId}
+                  content={data.todos[todoId].content}
+                  complete={data.todos[todoId].complete}
+                  onEdit={() => {}}
+                  onSubmit={() => {}}
+                />
+              );
+            })
+          : null}
+      </Generic.Container>
     </>
   );
 }

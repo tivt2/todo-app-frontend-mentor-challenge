@@ -29,8 +29,8 @@ export type Tuser = {
 
 export enum THEME_TYPE {
   SYSTEM,
-  LIGHT,
   DARK,
+  LIGHT,
 }
 
 export enum FILTER_TYPE {
