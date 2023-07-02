@@ -14,9 +14,7 @@ export function GenericButton({
   return (
     <button
       {...rest}
-      className={`flex items-center justify-center gap-1 font-medium ${
-        className ?? ""
-      }`}
+      className={`flex items-center justify-center gap-1 ${className ?? ""}`}
     >
       {Icon ? <Icon /> : null}
       {text}

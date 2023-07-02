@@ -14,7 +14,7 @@ const desktopImage = {
 };
 
 export function BackgroundImage() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <picture className=" -z-50 fixed top-0 w-full h-full">

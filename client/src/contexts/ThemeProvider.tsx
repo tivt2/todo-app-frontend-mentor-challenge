@@ -1,10 +1,11 @@
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { THEME_TYPE } from "@/types/types";
-import { ReactNode, createContext, useEffect } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 
 export const ThemeContext = createContext({
   theme: THEME_TYPE.SYSTEM,
   setTheme: (newTheme: THEME_TYPE) => {},
+  windowWidth: 0,
 });
 
 interface ThemeProviderProps {
@@ -16,6 +17,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     "theme",
     THEME_TYPE.SYSTEM
   );
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
     if (theme === THEME_TYPE.SYSTEM) {
@@ -40,8 +42,20 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     };
   }, [theme]);
 
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleWindowResize);
+    handleWindowResize();
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, windowWidth }}>
       {children}
     </ThemeContext.Provider>
   );

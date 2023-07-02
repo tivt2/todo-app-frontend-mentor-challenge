@@ -10,9 +10,9 @@ export function SPA() {
   const { auth } = useContext(AuthContext);
 
   return (
-    <main className="relative z-0 w-full h-screen flex flex-col items-center bg-light-base-100 dark:bg-dark-base-600">
+    <main className="relative z-0 w-full min-h-screen flex flex-col items-center bg-light-base-100 dark:bg-dark-base-600">
       <BackgroundImage />
-      <div className=" w-full max-w-lg flex flex-col items-center py-10 px-5 brkpt:py-16">
+      <div className=" w-full max-w-xl flex flex-col items-center py-11 px-6 brkpt:py-20">
         <Header />
         {auth ? (
           <TodoApp />
@@ -22,7 +22,7 @@ export function SPA() {
           </Generic.Container>
         )}
         <footer className=" mt-10">
-          <p className=" w-full text-xs text-light-base-400 dark:text-dark-base-300">
+          <p className=" w-full text-xs font-bold tracking-wide text-light-base-400 dark:text-dark-base-300">
             Drag and drop to reorder list
           </p>
         </footer>

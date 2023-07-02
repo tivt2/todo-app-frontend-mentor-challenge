@@ -10,13 +10,15 @@ export function Header() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <header className=" w-full flex flex-row items-center justify-between text-light-base-100 mb-6 brkpt:mb-10">
-      <h1 className="text-2xl brkpt:text-4xl tracking-[0.3em]">TODO</h1>
+    <header className=" w-full flex flex-row items-center justify-between text-light-base-100 mb-8 brkpt:mb-10">
+      <h1 className="text-2xl font-bold brkpt:text-5xl tracking-[0.3em]">
+        TODO
+      </h1>
       <div className="flex flex-row items-center gap-6">
         {auth ? (
           <Generic.Button
             text="LOGOUT"
-            className=" text-xs border border-light-base-100 rounded-md px-2 py-1"
+            className=" text-xs border border-light-base-100 rounded-md px-3 py-2 pt-[0.65rem]"
             onClick={() => handleLogout()}
           />
         ) : null}

@@ -14,6 +14,11 @@ export type TauthContext = {
   handleLogout: () => void;
 };
 
+export type TnewTodo = {
+  content: string;
+  complete: boolean;
+};
+
 export type TtodoItem = {
   id: string;
   content: string;

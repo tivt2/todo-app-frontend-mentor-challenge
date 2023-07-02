@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .border-gradient:hover::before {
   content: '';
   position: absolute;

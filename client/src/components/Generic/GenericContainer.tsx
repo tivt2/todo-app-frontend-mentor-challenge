@@ -11,7 +11,7 @@ export function GenericContainer({
 }: GenericContainerProps) {
   return (
     <div
-      className={`w-full bg-light-base-100 rounded-lg ${className}`}
+      className={`w-full rounded-[0.3rem] bg-light-base-100 dark:bg-dark-base-500 shadow-lightMobile dark:shadow-darkMobile brkpt:shadow-lightDesktop brkpt:dark:shadow-darkMobile ${className}`}
       {...rest}
     >
       {children}

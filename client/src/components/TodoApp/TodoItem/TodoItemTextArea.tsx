@@ -1,10 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { ThemeContext } from "@/contexts/ThemeProvider";
+import { useCallback, useContext, useEffect, useRef } from "react";
 
 interface TodoItemTextAreaProps {
   complete: boolean;
   content: string;
+  onClick: () => void;
   onChange: (newContent: string) => void;
   onCtrlEnter: () => void;
   isEditing: boolean;
@@ -15,6 +17,7 @@ interface TodoItemTextAreaProps {
 export const TodoItemTextArea = ({
   complete,
   content,
+  onClick,
   onChange,
   onCtrlEnter,
   isEditing,
@@ -22,6 +25,7 @@ export const TodoItemTextArea = ({
   onBlur = () => {},
 }: TodoItemTextAreaProps) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
+  const { windowWidth } = useContext(ThemeContext);
 
   const handleResize = useCallback(() => {
     if (textRef.current) {
@@ -41,6 +45,10 @@ export const TodoItemTextArea = ({
     }
   }, [textRef, handleResize, isEditing]);
 
+  useEffect(() => {
+    handleResize();
+  }, [windowWidth]);
+
   const handleKeyDown = (isCtrl: boolean, key: string) => {
     if (isCtrl && key === "Enter") {
       onCtrlEnter();
@@ -50,11 +58,12 @@ export const TodoItemTextArea = ({
   return (
     <textarea
       disabled={!isEditing}
-      className={`w-full block text-xs brkpt:text-base bg-transparent leading-tight cursor-pointer placeholder:text-light-base-400 dark:placeholder:text-dark-base-200 caret-primaryBlue outline-none resize-none ${
-        complete && !newTodo
+      className={`mt-1 w-full block text-xs brkpt:text-base bg-transparent leading-tight cursor-pointer placeholder:text-light-base-400 dark:placeholder:text-dark-base-200 caret-primaryBlue outline-none resize-none ${
+        complete && !newTodo && !isEditing
           ? " line-through text-light-base-300 dark:text-dark-base-300"
-          : "text-light-base-500 dar:text-dark-base-100"
+          : "text-light-base-500 dark:text-dark-base-100"
       }`}
+      onClick={() => onClick()}
       onChange={(e) => {
         handleResize();
         onChange(e.target.value);
