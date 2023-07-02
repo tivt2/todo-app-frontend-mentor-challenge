@@ -1,45 +1,12 @@
-import { TnewTodo, TtodoItem } from "@/types/types";
+import { TnewTodo, TtodoItem, Tuser } from "@/types/types";
 import { addTokenToRequest, api } from "./axios";
 
-const fetchUser = (onFailure: (err?: any) => void) => async () => {
-  addTokenToRequest();
-  try {
-    const res = await api.get("/todos");
-    return res.data;
-  } catch (err) {
-    onFailure(err);
-  }
+const fetchNewTodo = async (newTodo: TnewTodo) => {
+  return api.post("/todos", { data: newTodo });
 };
 
-const fetchNewTodo =
-  (onFailure: (err?: any) => void) => async (newTodo: TnewTodo) => {
-    try {
-      const res = await api.post("/todos", { data: newTodo });
-      return res.data;
-    } catch (err) {
-      onFailure(err);
-    }
-  };
+const fetchEditTodo = async ({ id, ...editTodo }: TtodoItem) => {
+  return api.put(`/todos/${id}`, { data: { ...editTodo } });
+};
 
-const fetchEditTodo =
-  (onFailure: (err?: any) => void) =>
-  async ({ id, ...editTodo }: TtodoItem) => {
-    try {
-      const res = await api.put(`/todos/${id}`, { data: { ...editTodo } });
-      return res.data;
-    } catch (err) {
-      onFailure(err);
-    }
-  };
-
-const fetchDeleteTodo =
-  (onFailure: (err?: any) => void) => async (todoIds: string[]) => {
-    try {
-      const res = await api.delete("/todos", { data: { todoIds } });
-      return res.data;
-    } catch (err) {
-      onFailure(err);
-    }
-  };
-
-export { fetchUser, fetchNewTodo, fetchEditTodo, fetchDeleteTodo };
+export { fetchNewTodo, fetchEditTodo };

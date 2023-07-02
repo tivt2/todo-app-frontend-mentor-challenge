@@ -25,7 +25,7 @@ export const TodoItemTextArea = ({
   onBlur = () => {},
 }: TodoItemTextAreaProps) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
-  const { windowWidth } = useContext(ThemeContext);
+  const { brkpt } = useContext(ThemeContext);
 
   const handleResize = useCallback(() => {
     if (textRef.current) {
@@ -47,7 +47,7 @@ export const TodoItemTextArea = ({
 
   useEffect(() => {
     handleResize();
-  }, [windowWidth]);
+  }, [brkpt]);
 
   const handleKeyDown = (isCtrl: boolean, key: string) => {
     if (isCtrl && key === "Enter") {

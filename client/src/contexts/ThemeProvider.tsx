@@ -5,7 +5,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 export const ThemeContext = createContext({
   theme: THEME_TYPE.SYSTEM,
   setTheme: (newTheme: THEME_TYPE) => {},
-  windowWidth: 0,
+  brkpt: false,
 });
 
 interface ThemeProviderProps {
@@ -18,6 +18,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     THEME_TYPE.SYSTEM
   );
   const [windowWidth, setWindowWidth] = useState(0);
+
+  const windowBrkpt = windowWidth < 576;
 
   useEffect(() => {
     if (theme === THEME_TYPE.SYSTEM) {
@@ -55,7 +57,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, windowWidth }}>
+    <ThemeContext.Provider value={{ theme, setTheme, brkpt: windowBrkpt }}>
       {children}
     </ThemeContext.Provider>
   );

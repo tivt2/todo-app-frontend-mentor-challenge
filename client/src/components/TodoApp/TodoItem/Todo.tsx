@@ -19,7 +19,7 @@ export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
   );
   const [isEditing, setIsEditing] = useState(isNewTodo ? true : false);
   const [isHover, setIsHover] = useState(false);
-  const { windowWidth } = useContext(ThemeContext);
+  const { brkpt } = useContext(ThemeContext);
 
   const handleOnCtrlEnter = () => {
     if (isNewTodo) {
@@ -75,7 +75,7 @@ export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
             setTodoComplete(false);
           }}
         />
-      ) : windowWidth < 576 || isHover ? (
+      ) : brkpt || isHover ? (
         <Generic.Button
           icon={Icon.X}
           className="h-full min-w-[20px] scale-75 cursor-pointer brkpt:scale-90"

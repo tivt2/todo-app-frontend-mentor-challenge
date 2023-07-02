@@ -1,10 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-import { readDB } from "./utils/DB-read-write";
+import { readDB } from "./utils/DBReadWrite";
 import { Tdb } from "./types/types";
 import { buildUser } from "./utils/buildUser";
 import { genToken } from "./utils/genToken";
 import { authToken } from "./middleware/authToken";
+import { deleteTodoItem } from "./utils/utils";
 
 const app: Express = express();
 
@@ -67,6 +68,21 @@ app.get("/api/todos", authToken, (req: Request, res: Response) => {
   const { userId } = req.body;
 
   const user = DB[userId];
+  const payload = {
+    id: user.id,
+    username: user.username,
+    todos: user.todos,
+    todosOrder: user.todosOrder,
+  };
+  res.status(200).json(payload);
+});
+
+app.delete("/api/todos", authToken, (req: Request, res: Response) => {
+  console.log("new delete todos request");
+  const { userId, todoIds } = req.body;
+
+  const user = DB[userId];
+  deleteTodoItem(DB, user, todoIds);
   const payload = {
     id: user.id,
     username: user.username,
