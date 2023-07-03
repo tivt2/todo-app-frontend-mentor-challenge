@@ -14,13 +14,7 @@ export function SPA() {
       <BackgroundImage />
       <div className=" w-full max-w-xl flex flex-col items-center py-11 px-6 brkpt:py-20">
         <Header />
-        {auth ? (
-          <TodoApp />
-        ) : (
-          <Generic.Container>
-            <LoginSignupComponent />
-          </Generic.Container>
-        )}
+        {auth ? <TodoApp /> : <LoginSignupComponent />}
         <footer className=" mt-10">
           <p className=" w-full text-xs font-bold tracking-wide text-light-base-400 dark:text-dark-base-300">
             Drag and drop to reorder list

@@ -3,37 +3,59 @@ import { TodoItem } from ".";
 import { Generic } from "@/components/Generic";
 import { Icon } from "@/components/Icons";
 import { ThemeContext } from "@/contexts/ThemeProvider";
+import { useDeleteTodoApi } from "@/api/hooks/useDeleteTodoApi";
+import { useCreateTodoApi } from "@/api/hooks/useCreateTodoApi";
+import { useUpdateTodoApi } from "@/api/hooks/useUpdateTodoApi";
 
 interface TodoProps {
+  todoId?: string;
   content?: string;
   complete?: boolean;
   isNewTodo?: boolean;
 }
 
-export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
+export function Todo({
+  todoId,
+  content,
+  complete,
+  isNewTodo = false,
+}: TodoProps) {
   const [todoContent, setTodoContent] = useState(
     isNewTodo ? "" : content ?? ""
   );
   const [todoComplete, setTodoComplete] = useState(
     isNewTodo ? false : complete ?? false
   );
-  const [isEditing, setIsEditing] = useState(isNewTodo ? true : false);
-  const [isHover, setIsHover] = useState(false);
   const { brkpt } = useContext(ThemeContext);
+  const [isHover, setIsHover] = useState(false);
+  const [isEditing, setIsEditing] = useState(isNewTodo ? true : false);
+
+  const { createTodo } = useCreateTodoApi();
+  const { updateTodo } = useUpdateTodoApi();
+  const { deleteTodos } = useDeleteTodoApi();
 
   const handleOnCtrlEnter = () => {
     if (isNewTodo) {
-      // fetchNewTodo
+      createTodo({ content: todoContent, complete: todoComplete });
       setTodoContent("");
       setTodoComplete(false);
     } else {
-      // fetchEditTodo
+      updateTodo({
+        id: todoId as string,
+        content: todoContent,
+        complete: !todoComplete,
+      });
+      setIsEditing(false);
     }
   };
 
   const handleOnBlur = () => {
     if (!isNewTodo) {
-      // fetchEditTodo
+      updateTodo({
+        id: todoId as string,
+        content: todoContent,
+        complete: !todoComplete,
+      });
     }
     setIsEditing(false);
   };
@@ -52,6 +74,13 @@ export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
       <TodoItem.Check
         complete={todoComplete}
         onClick={() => {
+          if (!isNewTodo) {
+            updateTodo({
+              id: todoId as string,
+              content: todoContent,
+              complete: !todoComplete,
+            });
+          }
           setTodoComplete((curr) => !curr);
         }}
       />
@@ -70,7 +99,7 @@ export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
           text="Ctrl+Enter"
           className="text-xs leading-none whitespace-nowrap font-bold text-light-base-300 dark:text-dark-base-400"
           onClick={() => {
-            // fetchNewTodo
+            createTodo({ content: todoContent, complete: todoComplete });
             setTodoContent("");
             setTodoComplete(false);
           }}
@@ -80,7 +109,7 @@ export function Todo({ content, complete, isNewTodo = false }: TodoProps) {
           icon={Icon.X}
           className="h-full min-w-[20px] scale-75 cursor-pointer brkpt:scale-90"
           onClick={() => {
-            // fetchDeleteTdodos
+            deleteTodos([todoId as string]);
           }}
         />
       ) : null}

@@ -1,9 +1,8 @@
 import { addTokenToRequest, api } from "@/api/axios";
 import { Tuser } from "@/types/types";
-import { AxiosError } from "axios";
 import { useQuery } from "react-query";
 
-const fetchUser = async (): Promise<Tuser> => {
+const readUserRequest = async (): Promise<Tuser> => {
   addTokenToRequest();
   try {
     const res = await api.get("/todos");
@@ -20,7 +19,7 @@ export function useTodoApi({
   onSuccess: (data: Tuser) => void;
   onError: (err: unknown) => void;
 }) {
-  return useQuery<Tuser>("todos", fetchUser, {
+  return useQuery<Tuser>("todos", readUserRequest, {
     onSuccess,
     onError,
   });

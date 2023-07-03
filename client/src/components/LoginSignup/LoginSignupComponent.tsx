@@ -7,8 +7,8 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthProvider";
 
 const LoginSingupSchema = z.object({
-  username: z.string().nonempty("Cannot be empty"),
-  password: z.string().nonempty("Cannot be empty"),
+  username: z.string().min(3).max(20).nonempty("Cannot be empty"),
+  password: z.string().min(6).max(30).nonempty("Cannot be empty"),
   confirm: z.string().optional(),
 });
 
@@ -52,6 +52,7 @@ export function LoginSignupComponent() {
       handleRegister(payload)
         .then((data) => {
           console.log(data.data.message);
+          setIsSignup(false);
         })
         .catch((err) =>
           setError("username", { message: err.response.data.message })
@@ -69,7 +70,7 @@ export function LoginSignupComponent() {
   };
 
   return (
-    <Generic.Container className="p-8">
+    <Generic.Container className="p-8 max-w-sm">
       <form onSubmit={handleSubmit(isSingup ? onSignup : onLogin)}>
         <LoginSingup.Input
           type={"username"}

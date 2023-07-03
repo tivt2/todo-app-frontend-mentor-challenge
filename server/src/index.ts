@@ -5,7 +5,7 @@ import { Tdb } from "./types/types";
 import { buildUser } from "./utils/buildUser";
 import { genToken } from "./utils/genToken";
 import { authToken } from "./middleware/authToken";
-import { deleteTodoItem } from "./utils/utils";
+import { deleteTodoItem, editTodoItem, newTodoItem } from "./utils/utils";
 
 const app: Express = express();
 
@@ -77,12 +77,51 @@ app.get("/api/todos", authToken, (req: Request, res: Response) => {
   res.status(200).json(payload);
 });
 
+app.post("/api/todos", authToken, (req: Request, res: Response) => {
+  console.log("new create todo request");
+  const {
+    userId,
+    data: { content, complete },
+  } = req.body;
+
+  const user = DB[userId];
+  newTodoItem(DB, user, content, complete);
+  console.log("created new todo");
+  const payload = {
+    id: user.id,
+    username: user.username,
+    todos: user.todos,
+    todosOrder: user.todosOrder,
+  };
+  res.status(200).json(payload);
+});
+
+app.put("/api/todos", authToken, (req: Request, res: Response) => {
+  console.log("new edit todo request");
+  const {
+    userId,
+    data: { id: todoId, content, complete },
+  } = req.body;
+
+  const user = DB[userId];
+  editTodoItem(DB, user, todoId, content, complete);
+  console.log("edited todo item");
+  const payload = {
+    id: user.id,
+    username: user.username,
+    todos: user.todos,
+    todosOrder: user.todosOrder,
+  };
+  res.status(200).json(payload);
+});
+
 app.delete("/api/todos", authToken, (req: Request, res: Response) => {
   console.log("new delete todos request");
   const { userId, todoIds } = req.body;
 
   const user = DB[userId];
   deleteTodoItem(DB, user, todoIds);
+  console.log("deleted todo item");
   const payload = {
     id: user.id,
     username: user.username,

@@ -26,6 +26,9 @@ export function TodoApp() {
   });
 
   const filteredorder = filterOrder(filterType, user as Tuser);
+  const itemsLeft = filterOrder(FILTER_TYPE.ACTIVE, user as Tuser).length;
+
+  // console.log(itemsLeft, user);
 
   return (
     <div className="w-full flex flex-col items-center gap-4 brkpt:gap-[1.35rem]">
@@ -41,6 +44,7 @@ export function TodoApp() {
               return (
                 <Todo
                   key={todoId}
+                  todoId={todoId}
                   content={user.todos[todoId].content}
                   complete={user.todos[todoId].complete}
                 />
@@ -48,9 +52,7 @@ export function TodoApp() {
             })
           : null}
         <TodoItem.Root className=" flex flex-row items-center justify-between p-4 cursor-pointer gap-3 brkpt:gap-4 text-xs brkpt:text-sm text-light-base-400 dark:text-dark-base-300 font-bold">
-          <span className="mt-1">
-            {filterOrder(FILTER_TYPE.ACTIVE, user as Tuser).length} items left
-          </span>
+          <span className="mt-1">{itemsLeft} items left</span>
           {!brkpt ? (
             <TodoItem.Root className="pl-[7ex] flex flex-row items-center justify-center gap-4 text-sm font-bold text-light-base-400 dark:text-dark-base-200">
               <TodoFilter
