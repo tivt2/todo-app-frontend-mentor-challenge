@@ -20,7 +20,8 @@ export function useDeleteTodoApi() {
     string[],
     { oldUser?: Tuser }
   >(deleteTodoRequest, {
-    onMutate: (todoIds) => {
+    onMutate: async (todoIds) => {
+      queryClient.cancelQueries("todos");
       const oldUser = queryClient.getQueryData<Tuser>("todos");
       const newUser = filterTodosFromUser(oldUser as Tuser, todoIds);
       queryClient.setQueryData<Tuser>("todos", newUser);

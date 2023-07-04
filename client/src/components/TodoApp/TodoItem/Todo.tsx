@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext, useRef, useState } from "react";
 import { TodoItem } from ".";
 import { Generic } from "@/components/Generic";

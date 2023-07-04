@@ -20,7 +20,8 @@ export function useUpdateTodoApi() {
     TtodoItem,
     { oldUser?: Tuser }
   >(updateTodoRequest, {
-    onMutate: (editTodo) => {
+    onMutate: async (editTodo) => {
+      await queryClient.cancelQueries("todos");
       const oldUser = queryClient.getQueryData<Tuser>("todos");
       const newUser = editTodoInUser(editTodo, oldUser as Tuser);
       queryClient.setQueryData("todos", newUser);

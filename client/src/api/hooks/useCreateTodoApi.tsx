@@ -20,7 +20,8 @@ export function useCreateTodoApi() {
     TnewTodo,
     { oldUser?: Tuser }
   >(createTodoRequest, {
-    onMutate: (newTodo) => {
+    onMutate: async (newTodo) => {
+      queryClient.cancelQueries("todos");
       const oldUser = queryClient.getQueryData<Tuser>("todos");
       const newUser = genMockNewTodo(newTodo, oldUser as Tuser);
       queryClient.setQueryData<Tuser>("todos", newUser);
