@@ -26,11 +26,11 @@ export function useUpdateTodoApi() {
       queryClient.setQueryData("todos", newUser);
       return { oldUser };
     },
+    onSuccess: (data) => {
+      queryClient.setQueryData("todos", data);
+    },
     onError: (_error, _, context) => {
       queryClient.setQueryData("todos", context?.oldUser);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("todos");
     },
   });
 

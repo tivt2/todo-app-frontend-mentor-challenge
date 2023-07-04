@@ -8,6 +8,7 @@ export function TodoItemCheck({ complete, onClick }: TodoItemCheckProps) {
     <div
       onClick={(e) => {
         e.stopPropagation();
+        e.preventDefault();
         onClick();
       }}
       className={`relative h-5 brkpt:h-6 aspect-square flex items-center justify-center rounded-full cursor-pointer ${

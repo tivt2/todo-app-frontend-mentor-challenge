@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 
 const readUserRequest = async (): Promise<Tuser> => {
   addTokenToRequest();
+  console.count("trying request");
   try {
     const res = await api.get("/todos");
     return res.data;
@@ -20,7 +21,9 @@ export function useTodoApi({
   onError: (err: unknown) => void;
 }) {
   return useQuery<Tuser>("todos", readUserRequest, {
-    onSuccess,
-    onError,
+    onSuccess, // dealing with success on the TodoApp component
+    onError, // dealing with error on the TodoApp component
+    retry: 1,
+    staleTime: 1000 * 60, // 60 seconds
   });
 }

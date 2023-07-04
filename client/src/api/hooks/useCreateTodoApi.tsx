@@ -26,11 +26,11 @@ export function useCreateTodoApi() {
       queryClient.setQueryData<Tuser>("todos", newUser);
       return { oldUser };
     },
+    onSuccess: (data) => {
+      queryClient.setQueryData("todos", data);
+    },
     onError: (_error, _newTodo, context) => {
       queryClient.setQueryData("todos", context?.oldUser);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("todos");
     },
   });
 

@@ -5,10 +5,11 @@ import { LoginSingup } from ".";
 import { Generic } from "../Generic";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthProvider";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LoginSingupSchema = z.object({
-  username: z.string().min(3).max(20).nonempty("Cannot be empty"),
-  password: z.string().min(6).max(30).nonempty("Cannot be empty"),
+  username: z.string().min(0).max(20).nonempty("Cannot be empty"),
+  password: z.string().min(0).max(30).nonempty("Cannot be empty"),
   confirm: z.string().optional(),
 });
 
@@ -37,7 +38,7 @@ export function LoginSignupComponent() {
     handleLogin(payload)
       .then((data) => {
         const token = data.data.token;
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         setAuth(true);
       })
       .catch((err) => {

@@ -26,11 +26,11 @@ export function useDeleteTodoApi() {
       queryClient.setQueryData<Tuser>("todos", newUser);
       return { oldUser };
     },
+    onSuccess: (data) => {
+      queryClient.setQueryData("todos", data);
+    },
     onError: (_error, _todoIds, context) => {
       queryClient.setQueryData("todos", context?.oldUser);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("todos");
     },
   });
 

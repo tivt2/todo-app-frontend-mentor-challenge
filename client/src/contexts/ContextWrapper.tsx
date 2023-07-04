@@ -1,3 +1,5 @@
+"use client";
+
 import { queryClient } from "@/api/queryClient";
 import { QueryClientProvider } from "react-query";
 import { AuthProvider } from "./AuthProvider";

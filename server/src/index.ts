@@ -6,13 +6,29 @@ import { buildUser } from "./utils/buildUser";
 import { genToken } from "./utils/genToken";
 import { authToken } from "./middleware/authToken";
 import { deleteTodoItem, editTodoItem, newTodoItem } from "./utils/utils";
+import { v4 as uuidv4 } from "uuid";
+import { comparePassword, hashPassword } from "./utils/hashing";
 
 const app: Express = express();
 
 let DB: Tdb;
 
 readDB()
-  .then((data) => (DB = data))
+  .then(async (data) => {
+    const hashedPassword = await hashPassword("admin2");
+    const newUser = buildUser("admin2", hashedPassword);
+    for (let i = 0; i < 1000; i++) {
+      const newTodoId = uuidv4();
+      newUser.todos[newTodoId] = {
+        id: newTodoId,
+        content: newTodoId,
+        complete: false,
+      };
+      newUser.todosOrder.push(newTodoId);
+    }
+    data[newUser.id] = newUser;
+    DB = data;
+  })
   .catch(() => (DB = {}));
 
 app.use(express.json());
@@ -36,7 +52,7 @@ app.post("/api/register", async (req: Request, res: Response) => {
   }
 
   console.log("building new user");
-  const hashedPassword = password; // NEED TO DO BCRYPT LOGIC HERE
+  const hashedPassword = await hashPassword(password); // NEED TO DO BCRYPT LOGIC HERE
   const newUser = buildUser(username, hashedPassword);
   DB[newUser.id] = newUser;
   res.status(201).json({ message: `Registred user ${username}` });
@@ -54,7 +70,7 @@ app.post("/api/login", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const passwordMatch = password === DB[userId].password;
+  const passwordMatch = comparePassword(password, DB[userId].password);
   if (!passwordMatch) {
     return res.status(401).json({ message: "Invalid credentials" });
   }

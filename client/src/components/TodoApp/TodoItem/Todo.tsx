@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { TodoItem } from ".";
 import { Generic } from "@/components/Generic";
 import { Icon } from "@/components/Icons";
@@ -29,6 +29,7 @@ export function Todo({
   const { brkpt } = useContext(ThemeContext);
   const [isHover, setIsHover] = useState(false);
   const [isEditing, setIsEditing] = useState(isNewTodo ? true : false);
+  const contentBeforeEditing = useRef(todoContent);
 
   const { createTodo } = useCreateTodoApi();
   const { updateTodo } = useUpdateTodoApi();
@@ -39,22 +40,22 @@ export function Todo({
       createTodo({ content: todoContent, complete: todoComplete });
       setTodoContent("");
       setTodoComplete(false);
-    } else {
+    } else if (contentBeforeEditing.current !== todoContent) {
       updateTodo({
         id: todoId as string,
         content: todoContent,
-        complete: !todoComplete,
+        complete: todoComplete,
       });
       setIsEditing(false);
     }
   };
 
   const handleOnBlur = () => {
-    if (!isNewTodo) {
+    if (!isNewTodo && contentBeforeEditing.current !== todoContent) {
       updateTodo({
         id: todoId as string,
         content: todoContent,
-        complete: !todoComplete,
+        complete: todoComplete,
       });
     }
     setIsEditing(false);
@@ -67,7 +68,10 @@ export function Todo({
           ? "border-b border-b-light-base-200 dark:border-b-dark-base-400"
           : ""
       }`}
-      onClick={() => setIsEditing(true)}
+      onClick={() => {
+        contentBeforeEditing.current = todoContent;
+        setIsEditing(true);
+      }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -89,7 +93,10 @@ export function Todo({
         isEditing={isEditing}
         content={todoContent}
         complete={todoComplete}
-        onClick={() => setIsEditing(true)}
+        onClick={() => {
+          contentBeforeEditing.current = todoContent;
+          setIsEditing(true);
+        }}
         onCtrlEnter={() => handleOnCtrlEnter()}
         onBlur={() => handleOnBlur()}
         onChange={setTodoContent}

@@ -1,5 +1,3 @@
-"use client";
-
 import { SPA } from "./spa";
 import { ContextWrapper } from "@/contexts/ContextWrapper";
 

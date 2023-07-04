@@ -1,6 +1,7 @@
 import { api } from "@/api/axios";
 import { TauthContext } from "@/types/types";
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
 
 export const AuthContext = createContext<TauthContext>({} as TauthContext);
 
@@ -10,19 +11,31 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [auth, setAuth] = useState(false);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      setAuth(token ? true : false);
+    } catch {
+      setAuth(false);
+    }
+  }, [auth]);
 
   const handleLogin = (payload: { username: string; password: string }) => {
-    console.log("trying to login");
     return api.post("/login", payload);
   };
 
   const handleRegister = (payload: { username: string; password: string }) => {
-    console.log("trying to register");
     return api.post("/register", payload);
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
+    queryClient.cancelQueries("todos");
     setAuth(false);
   };
 

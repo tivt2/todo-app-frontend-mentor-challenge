@@ -1,4 +1,5 @@
-import { Generic } from "@/components/Generic";
+"use client";
+
 import { BackgroundImage } from "@/components/Header/BackgroundImage";
 import { Header } from "@/components/Header/Header";
 import { LoginSignupComponent } from "@/components/LoginSignup/LoginSignupComponent";

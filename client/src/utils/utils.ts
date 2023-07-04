@@ -17,8 +17,8 @@ export const filterTodosFromUser = (user: Tuser, todoIds: string[]): Tuser => {
   };
 };
 
-export const filterOrder = (filter: FILTER_TYPE, user: Tuser) => {
-  if (!user) {
+export const filterOrder = (filter: FILTER_TYPE, user: Tuser | undefined) => {
+  if (!user || !user.todosOrder) {
     return [];
   }
   if (filter === FILTER_TYPE.ALL) {
