@@ -62,6 +62,7 @@ export const TodoItemTextArea = ({
           ? " line-through text-light-base-300 dark:text-dark-base-300"
           : "text-light-base-500 dark:text-dark-base-100"
       } ${!isEditing ? " pointer-events-none" : ""}`}
+      disabled={!isEditing}
       onClick={() => onClick()}
       onChange={(e) => {
         handleResize();

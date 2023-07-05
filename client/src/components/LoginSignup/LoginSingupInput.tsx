@@ -22,7 +22,7 @@ const LoginSignupInput = forwardRef(
             }
           }}
           {...rest}
-          className={`w-full outline-none rounded-[0.25rem] bg-transparent border border-light-base-300 dark:border-dark-base-300 px-2 py-1 caret-primaryBlue text-light-base-500 dark:text-dark-base-100`}
+          className={`w-full outline-none rounded-[0.25rem] bg-transparent border border-light-base-300 dark:border-dark-base-300 px-2 py-1 caret-primaryBlue text-light-base-500 dark:text-dark-base-100 placeholder:text-light-base-300 placeholder:dark:text-dark-base-300`}
         />
         {errorMessage ? <LoginSingup.Error message={errorMessage} /> : null}
       </div>

@@ -7,8 +7,16 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthProvider";
 
 const LoginSingupSchema = z.object({
-  username: z.string().min(0).max(20).nonempty("Cannot be empty"),
-  password: z.string().min(0).max(30).nonempty("Cannot be empty"),
+  username: z
+    .string()
+    .min(3, "Minumum of 3 characters")
+    .max(20)
+    .nonempty("Cannot be empty"),
+  password: z
+    .string()
+    .min(4, "Minimum of 5 characters")
+    .max(30)
+    .nonempty("Cannot be empty"),
   confirm: z.string().optional(),
 });
 
@@ -70,8 +78,11 @@ export function LoginSignupComponent() {
   };
 
   return (
-    <Generic.Container className="p-8 max-w-sm">
-      <form onSubmit={handleSubmit(isSingup ? onSignup : onLogin)}>
+    <Generic.Container className="p-8 max-w-sm flex flex-col justify-center items-center mt-14">
+      <form
+        onSubmit={handleSubmit(isSingup ? onSignup : onLogin)}
+        className="w-full"
+      >
         <LoginSingup.Input
           type={"username"}
           label="user name:"
@@ -111,6 +122,13 @@ export function LoginSignupComponent() {
           />
         </div>
       </form>
+      {isSingup ? null : (
+        <p className=" justify-self-center text-xs mt-6 text-light-base-400 text-center w-[75%]">
+          To login without registering type{" "}
+          <span className="text-primaryBlue text-sm">guest</span> for user name
+          and password
+        </p>
+      )}
     </Generic.Container>
   );
 }
