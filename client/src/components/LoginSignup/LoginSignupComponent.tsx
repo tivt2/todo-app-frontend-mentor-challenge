@@ -5,7 +5,6 @@ import { LoginSingup } from ".";
 import { Generic } from "../Generic";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthProvider";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LoginSingupSchema = z.object({
   username: z.string().min(0).max(20).nonempty("Cannot be empty"),

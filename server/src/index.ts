@@ -1,11 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-import { readDB } from "./utils/DBReadWrite";
 import { buildUser } from "./utils/buildUser";
 import { genToken } from "./utils/genToken";
 import { authToken } from "./middleware/authToken";
 import { deleteTodoItem, editTodoItem, newTodoUser } from "./utils/utils";
-import { v4 as uuidv4 } from "uuid";
 import { comparePassword, hashPassword } from "./utils/hashing";
 import { spamProtect } from "./middleware/spamProtect";
 import {
@@ -23,17 +21,6 @@ app.use(spamProtect);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello World" });
-});
-
-app.get("/user/:username", async (req: Request, res: Response) => {
-  const { username } = req.params;
-  const user = await selectUserByUsername(username);
-
-  if (!user) {
-    return res.json("deu nada");
-  }
-
-  res.json(user);
 });
 
 // REGISTER ROUTE

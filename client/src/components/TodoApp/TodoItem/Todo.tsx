@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { TodoItem } from ".";
 import { Generic } from "@/components/Generic";
 import { Icon } from "@/components/Icons";

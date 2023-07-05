@@ -1,5 +1,4 @@
 import { FILTER_TYPE } from "@/types/types";
-import { TodoItem } from "./TodoItem";
 import { Generic } from "../Generic";
 
 interface TodoFilterProps {

@@ -14,8 +14,6 @@ import {
   Draggable,
   DropResult,
   Droppable,
-  OnDragEndResponder,
-  ResponderProvided,
 } from "react-beautiful-dnd";
 import { useUpdateTodosOrderApi } from "@/api/hooks/useUpdateTodosOrderApi";
 import { useQueryClient } from "react-query";
