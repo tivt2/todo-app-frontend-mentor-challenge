@@ -1,0 +1,54 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "750f9320-32f4-454d-8483-9f5f704ebb3c",
+  "prevId": "1e1123eb-c875-4137-bf99-9ecc546b2ba0",
+  "tables": {
+    "user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "todos": {
+          "name": "todos",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "todosOrder": {
+          "name": "todosOrder",
+          "type": "uuid[]",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
