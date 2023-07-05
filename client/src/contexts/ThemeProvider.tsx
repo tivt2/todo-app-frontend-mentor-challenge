@@ -44,7 +44,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     return () => {
       body?.classList.remove("dark");
     };
-  }, [theme]);
+  }, [theme, setTheme]);
 
   useEffect(() => {
     const handleWindowResize = () => {

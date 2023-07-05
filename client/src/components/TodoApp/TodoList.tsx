@@ -16,7 +16,7 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import { useUpdateTodosOrderApi } from "@/api/hooks/useUpdateTodosOrderApi";
-import { useQueryClient } from "react-query";
+import { queryClient } from "@/api/queryClient";
 
 interface TodoListProps {
   filterType: FILTER_TYPE;
@@ -33,7 +33,6 @@ export function TodoList({ filterType, setFilterType }: TodoListProps) {
       return data;
     },
     onError: (_err) => {
-      const queryClient = useQueryClient();
       localStorage.removeItem("token");
       queryClient.removeQueries("todos");
       setAuth(false);

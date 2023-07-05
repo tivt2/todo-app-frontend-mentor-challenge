@@ -6,7 +6,7 @@ interface LoginSignupInputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
 }
 
-export const LoginSignupInput = forwardRef(
+const LoginSignupInput = forwardRef(
   ({ label, errorMessage, className, ...rest }: LoginSignupInputProps, ref) => {
     return (
       <div className={`w-full flex flex-col gap-1 ${className}`}>
@@ -29,3 +29,7 @@ export const LoginSignupInput = forwardRef(
     );
   }
 );
+
+LoginSignupInput.displayName = "LoginSignupInput";
+
+export { LoginSignupInput };

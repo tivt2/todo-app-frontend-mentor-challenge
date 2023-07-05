@@ -47,7 +47,7 @@ export const TodoItemTextArea = ({
 
   useEffect(() => {
     handleResize();
-  }, [brkpt]);
+  }, [brkpt, handleResize]);
 
   const handleKeyDown = (isCtrl: boolean, key: string) => {
     if (isCtrl && key === "Enter") {
