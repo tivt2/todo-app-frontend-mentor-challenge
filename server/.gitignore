@@ -4,3 +4,5 @@ enfironment.d.ts
 
 # node modules
 /node_modules/
+
+dist
