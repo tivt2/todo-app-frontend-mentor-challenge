@@ -27,16 +27,17 @@ export const spamProtect = (() => {
     requestTimeOutIps[ip]++;
   };
 
-  return (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     console.log("checking for spam");
-    if (!req.headers.origin) return res.status(403);
+    if (!req.headers.origin)
+      return res.status(403).json({ message: "No origin" });
 
     console.log("adding to ipList");
     timeOutIp(req.headers.origin);
 
     if (requestTimeOutIps[req.headers.origin] > AMOUNT_UNTIL_REQ_LOCK) {
       console.log("spamming");
-      return res.status(403);
+      return res.status(403).json({ message: "Spamming" });
     }
 
     next();

@@ -18,7 +18,7 @@ export function Header() {
         {auth ? (
           <Generic.Button
             text="LOGOUT"
-            className=" text-xs border border-light-base-100 rounded-md px-3 py-2 pt-[0.65rem]"
+            className=" text-xs text-light-base-100 border border-light-base-100 rounded-md px-3 py-2 pt-[0.65rem] hover:border-dark-base-100 hover:text-dark-base-100 hover:shadow-md transition-all"
             onClick={() => handleLogout()}
           />
         ) : null}

@@ -1,12 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { Tdb, TtodoItem, Tuser } from "../types/types";
+import { TtodoItem, Tuser } from "../types/types";
 
-const newTodoItem = (
-  db: Tdb,
-  user: Tuser,
-  content: string,
-  complete: boolean
-) => {
+const newTodoUser = (user: Tuser, content: string, complete: boolean) => {
   const buildTodoItem = (content: string, complete: boolean): TtodoItem => {
     return {
       id: uuidv4(),
@@ -17,24 +12,26 @@ const newTodoItem = (
 
   const newTodo = buildTodoItem(content, complete);
 
-  db[user.id].todos[newTodo.id] = newTodo;
-  db[user.id].todosOrder.push(newTodo.id);
+  user.todos[newTodo.id] = newTodo;
+  user.todosOrder.push(newTodo.id);
+  return user;
 };
 
 const editTodoItem = (
-  db: Tdb,
   user: Tuser,
   todoId: string,
   content: string,
   complete: boolean
-): void => {
-  db[user.id].todos[todoId] = { id: todoId, content, complete };
+) => {
+  user.todos[todoId] = { id: todoId, content, complete };
+  return user;
 };
 
-const deleteTodoItem = (db: Tdb, user: Tuser, todoIds: string[]): void => {
-  const oldOrder = db[user.id].todosOrder;
-  db[user.id].todosOrder = oldOrder.filter((id) => !todoIds.includes(id));
-  todoIds.forEach((id) => delete db[user.id].todos[id]);
+const deleteTodoItem = (user: Tuser, todoIds: string[]) => {
+  const oldOrder = user.todosOrder;
+  user.todosOrder = oldOrder.filter((id) => !todoIds.includes(id));
+  todoIds.forEach((id) => delete user.todos[id]);
+  return user;
 };
 
-export { newTodoItem, editTodoItem, deleteTodoItem };
+export { newTodoUser, editTodoItem, deleteTodoItem };

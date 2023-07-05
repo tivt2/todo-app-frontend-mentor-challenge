@@ -103,12 +103,12 @@ export function LoginSignupComponent() {
               setIsSignup((curr) => !curr);
               clearErrors(["username", "password", "confirm"]);
             }}
-            className=" px-4 py-2 pt-[0.65rem] text-bold rounded-md text-xs text-light-base-500 bg-light-base-300 font-bold"
+            className=" px-4 py-2 pt-[0.65rem] text-bold rounded-md text-xs text-light-base-500 bg-light-base-300 font-bold hover:bg-dark-base-100 hover:shadow-md transition-all"
           />
           <Generic.Button
             text={isSingup ? "REGISTER" : "LOGIN"}
             type={"submit"}
-            className=" px-4 py-2 pt-[0.65rem] text-bold rounded-md text-xs text-light-base-300 bg-light-base-500 font-bold"
+            className=" px-4 py-2 pt-[0.65rem] text-bold rounded-md text-xs text-light-base-200 bg-light-base-500 font-bold hover:brightness-110 hover:dark:brightness-90 hover:shadow-md transition-all"
           />
         </div>
       </form>

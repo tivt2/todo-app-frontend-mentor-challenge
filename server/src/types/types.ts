@@ -1,7 +1,3 @@
-type Tdb = {
-  [userId: string]: Tuser;
-};
-
 type Tuser = {
   id: string;
   username: string;
@@ -16,4 +12,4 @@ type TtodoItem = {
   complete: boolean;
 };
 
-export { Tuser, TtodoItem, Tdb };
+export { Tuser, TtodoItem };

@@ -1,0 +1,55 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1688569630963,
+      "tag": "0000_calm_songbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1688570385327,
+      "tag": "0001_fat_hannibal_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1688573895113,
+      "tag": "0002_colossal_ken_ellis",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1688575318655,
+      "tag": "0003_lame_smiling_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1688575346253,
+      "tag": "0004_lively_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1688575520001,
+      "tag": "0005_many_moira_mactaggert",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1688581609704,
+      "tag": "0006_lumpy_fallen_one",
+      "breakpoints": true
+    }
+  ]
+}

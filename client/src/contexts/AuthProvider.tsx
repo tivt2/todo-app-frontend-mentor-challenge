@@ -35,7 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    queryClient.cancelQueries("todos");
+    queryClient.removeQueries("todos");
     setAuth(false);
   };
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 
-const authToken = (req: Request, res: Response, next: NextFunction) => {
+const authToken = async (req: Request, res: Response, next: NextFunction) => {
   console.count("Trying to auth token");
   const token = req.headers.authorization?.split("Bearer ")[1];
 
