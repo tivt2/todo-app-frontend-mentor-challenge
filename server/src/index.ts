@@ -8,6 +8,7 @@ import { authToken } from "./middleware/authToken";
 import { deleteTodoItem, editTodoItem, newTodoItem } from "./utils/utils";
 import { v4 as uuidv4 } from "uuid";
 import { comparePassword, hashPassword } from "./utils/hashing";
+import { spamProtect } from "./middleware/spamProtect";
 
 const app: Express = express();
 
@@ -17,7 +18,7 @@ readDB()
   .then(async (data) => {
     const hashedPassword = await hashPassword("admin2");
     const newUser = buildUser("admin2", hashedPassword);
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 5; i++) {
       const newTodoId = uuidv4();
       newUser.todos[newTodoId] = {
         id: newTodoId,
@@ -33,6 +34,7 @@ readDB()
 
 app.use(express.json());
 app.use(cors());
+app.use(spamProtect);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello World" });
@@ -52,7 +54,7 @@ app.post("/api/register", async (req: Request, res: Response) => {
   }
 
   console.log("building new user");
-  const hashedPassword = await hashPassword(password); // NEED TO DO BCRYPT LOGIC HERE
+  const hashedPassword = await hashPassword(password);
   const newUser = buildUser(username, hashedPassword);
   DB[newUser.id] = newUser;
   res.status(201).json({ message: `Registred user ${username}` });
@@ -70,7 +72,7 @@ app.post("/api/login", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const passwordMatch = comparePassword(password, DB[userId].password);
+  const passwordMatch = await comparePassword(password, DB[userId].password);
   if (!passwordMatch) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
@@ -122,6 +124,25 @@ app.put("/api/todos", authToken, (req: Request, res: Response) => {
   const user = DB[userId];
   editTodoItem(DB, user, todoId, content, complete);
   console.log("edited todo item");
+  const payload = {
+    id: user.id,
+    username: user.username,
+    todos: user.todos,
+    todosOrder: user.todosOrder,
+  };
+  res.status(200).json(payload);
+});
+
+app.put("/api/todos/order", authToken, (req: Request, res: Response) => {
+  console.log("new edittodosOrder request");
+  const {
+    userId,
+    data: { newTodosOrder },
+  } = req.body;
+
+  const user = DB[userId];
+  user.todosOrder = newTodosOrder;
+  console.log("edited todosOrder");
   const payload = {
     id: user.id,
     username: user.username,

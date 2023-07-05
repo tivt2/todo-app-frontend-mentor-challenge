@@ -52,3 +52,9 @@ export const editTodoInUser = (editTodo: TtodoItem, user: Tuser) => {
   userCopy.todos[editTodo.id] = editTodo;
   return userCopy;
 };
+
+export const editTodosOrder = (newTodosOrder: string[], user: Tuser) => {
+  const userCopy = structuredClone(user);
+  userCopy.todosOrder = newTodosOrder;
+  return userCopy;
+};

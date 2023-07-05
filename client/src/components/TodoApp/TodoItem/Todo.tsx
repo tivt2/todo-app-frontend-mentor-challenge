@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
+import { forwardRef, useContext, useRef, useState } from "react";
 import { TodoItem } from ".";
 import { Generic } from "@/components/Generic";
 import { Icon } from "@/components/Icons";
@@ -10,18 +10,20 @@ import { useCreateTodoApi } from "@/api/hooks/useCreateTodoApi";
 import { useUpdateTodoApi } from "@/api/hooks/useUpdateTodoApi";
 
 interface TodoProps {
+  listIdx?: number;
   todoId?: string;
   content?: string;
   complete?: boolean;
   isNewTodo?: boolean;
 }
 
-export function Todo({
+export const Todo = ({
+  listIdx,
   todoId,
   content,
   complete,
   isNewTodo = false,
-}: TodoProps) {
+}: TodoProps) => {
   const [todoContent, setTodoContent] = useState(
     isNewTodo ? "" : content ?? ""
   );
@@ -124,4 +126,4 @@ export function Todo({
       ) : null}
     </TodoItem.Root>
   );
-}
+};

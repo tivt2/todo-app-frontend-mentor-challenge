@@ -1,17 +1,17 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, forwardRef } from "react";
 
 interface TodoItemRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export function TodoItemRoot({
+export const TodoItemRoot = ({
   children,
   className,
   ...rest
-}: TodoItemRootProps) {
+}: TodoItemRootProps) => {
   return (
     <div className={` ${className}`} {...rest}>
       {children}
     </div>
   );
-}
+};

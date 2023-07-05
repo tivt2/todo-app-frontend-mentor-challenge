@@ -9,6 +9,15 @@ import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "@/contexts/AuthProvider";
 import { ThemeContext } from "@/contexts/ThemeProvider";
 import { Todo } from "./TodoItem/Todo";
+import {
+  DragDropContext,
+  Draggable,
+  DropResult,
+  Droppable,
+  OnDragEndResponder,
+  ResponderProvided,
+} from "react-beautiful-dnd";
+import { useUpdateTodosOrderApi } from "@/api/hooks/useUpdateTodosOrderApi";
 
 interface TodoListProps {
   filterType: FILTER_TYPE;
@@ -19,6 +28,7 @@ export function TodoList({ filterType, setFilterType }: TodoListProps) {
   const { setAuth } = useContext(AuthContext);
   const { brkpt } = useContext(ThemeContext);
   const { deleteTodos } = useDeleteTodoApi();
+  const { updateTodosOrder } = useUpdateTodosOrderApi();
   const { data: user, isLoading } = useTodoApi({
     onSuccess: (data) => {
       return data;
@@ -39,20 +49,50 @@ export function TodoList({ filterType, setFilterType }: TodoListProps) {
       ? activeTodos
       : completedTodos;
 
+  const handleDragEnd = (results: DropResult) => {
+    const { source, destination } = results;
+    if (!user || !destination || destination.index === source.index) {
+      return;
+    }
+
+    const todosOrder = user.todosOrder.slice();
+    const item = todosOrder.splice(source.index, 1)[0];
+    todosOrder.splice(destination.index, 0, item);
+    updateTodosOrder(todosOrder);
+  };
+
   return (
     <Generic.Container>
-      {!isLoading
-        ? filteredorder?.map((todoId: string) => {
-            return (
-              <Todo
-                key={todoId}
-                todoId={todoId}
-                content={user?.todos[todoId].content}
-                complete={user?.todos[todoId].complete}
-              />
-            );
-          })
-        : null}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="ROOT">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {!isLoading
+                ? filteredorder.map((todoId: string, idx: number) => (
+                    <Draggable draggableId={todoId} index={idx} key={todoId}>
+                      {(provided) => (
+                        <div
+                          {...provided.dragHandleProps}
+                          {...provided.draggableProps}
+                          ref={provided.innerRef}
+                          className={` rounded-t-md bg-light-base-100 dark:bg-dark-base-500`}
+                        >
+                          <Todo
+                            listIdx={idx}
+                            todoId={todoId}
+                            content={user?.todos[todoId].content}
+                            complete={user?.todos[todoId].complete}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))
+                : null}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       <TodoItem.Root className=" flex flex-row items-center justify-between p-4 cursor-pointer gap-3 brkpt:gap-4 text-xs brkpt:text-sm text-light-base-400 dark:text-dark-base-300 font-bold">
         <span className="mt-1">{activeTodos.length} items left</span>
         {!brkpt ? (

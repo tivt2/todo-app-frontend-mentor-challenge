@@ -57,12 +57,11 @@ export const TodoItemTextArea = ({
 
   return (
     <textarea
-      disabled={!isEditing}
       className={`mt-1 w-full block text-xs brkpt:text-base bg-transparent leading-tight cursor-pointer placeholder:text-light-base-400 dark:placeholder:text-dark-base-200 caret-primaryBlue outline-none resize-none ${
         complete && !newTodo && !isEditing
           ? " line-through text-light-base-300 dark:text-dark-base-300"
           : "text-light-base-500 dark:text-dark-base-100"
-      }`}
+      } ${!isEditing ? " pointer-events-none" : ""}`}
       onClick={() => onClick()}
       onChange={(e) => {
         handleResize();
